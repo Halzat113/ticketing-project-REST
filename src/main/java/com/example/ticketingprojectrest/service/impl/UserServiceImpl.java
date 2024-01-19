@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
         switch (user.getRole().getDescription()) {
             case "Manager" -> {
-                List<ProjectDTO> projectDTOList = projectService.readAllByAssignedManager(user);
+                List<ProjectDTO> projectDTOList = projectService.readAllByAssignedManager(mapperUtil.convert(user,new UserDTO()));
                 return projectDTOList.size() == 0;
             }
             case "Employee" -> {

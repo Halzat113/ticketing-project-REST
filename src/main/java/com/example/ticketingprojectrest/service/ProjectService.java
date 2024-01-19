@@ -1,6 +1,7 @@
 package com.example.ticketingprojectrest.service;
 
 import com.example.ticketingprojectrest.dto.ProjectDTO;
+import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.User;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public interface ProjectService {
 
     List<ProjectDTO> listAllProjectDetails();
 
-    List<ProjectDTO> readAllByAssignedManager(User assignedManager);
+    List<ProjectDTO> readAllByAssignedManager(UserDTO assignedManager);
 }

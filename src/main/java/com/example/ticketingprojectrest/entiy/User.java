@@ -1,6 +1,7 @@
 package com.example.ticketingprojectrest.entiy;
 
 import com.example.ticketingprojectrest.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,6 @@ public class User extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String userName;
-
     private String passWord;
     private boolean enabled;
     private String phone;
