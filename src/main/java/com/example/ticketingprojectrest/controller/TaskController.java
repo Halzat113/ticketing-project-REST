@@ -1,6 +1,5 @@
 package com.example.ticketingprojectrest.controller;
 
-import com.example.ticketingprojectrest.dto.ProjectDTO;
 import com.example.ticketingprojectrest.dto.TaskDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
 import com.example.ticketingprojectrest.enums.Status;
@@ -32,7 +31,7 @@ public class TaskController {
     @PostMapping(consumes = "application/json")
     public ResponseEntity<ResponseWrapper> createTask(@RequestBody TaskDTO taskDTO){
         taskService.save(taskDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("created",taskDTO,HttpStatus.CREATED))
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseWrapper("created",taskDTO,HttpStatus.CREATED));
     }
 
     @DeleteMapping("/{id}")
@@ -52,4 +51,20 @@ public class TaskController {
     public ResponseEntity<ResponseWrapper> employeePendingTasks(){
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",taskService.listAllTasksByStatusIsNot(Status.COMPLETE),HttpStatus.OK))    ;
     }
+
+    @PutMapping(value = "/employee/update",consumes = "application/json")
+    public ResponseEntity<ResponseWrapper> employeeUpdateInsert(@RequestBody TaskDTO taskDTO){
+        taskService.updateStatus(taskDTO);
+        return ResponseEntity.ok(new ResponseWrapper("status updated",HttpStatus.OK));
+    }
+
+    @GetMapping(value = "/employee/archive")
+    public ResponseEntity<ResponseWrapper> employeeArchive(){
+        return ResponseEntity
+                .ok(new ResponseWrapper("successfully retrieved",taskService.listAllTasksByStatus(Status.COMPLETE),HttpStatus.OK));
+    }
+
+
+
+
 }
