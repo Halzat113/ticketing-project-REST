@@ -3,8 +3,10 @@ package com.example.ticketingprojectrest.controller;
 import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
 import com.example.ticketingprojectrest.service.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,18 +21,21 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<ResponseWrapper> getUsers(){
         List<UserDTO> userDTOSList = userService.listAllUsers();
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",userDTOSList, HttpStatus.OK));
     }
 
     @GetMapping("/{username}")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<ResponseWrapper> getUserByUsername(@PathVariable("username")String username){
         UserDTO userDTO = userService.findByUserName(username);
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",userDTO,HttpStatus.OK));
     }
 
     @PostMapping(consumes = "application/json")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<ResponseWrapper> createUser(@RequestBody UserDTO userDTO){
         userService.save(userDTO);
        return ResponseEntity
@@ -39,6 +44,7 @@ public class UserController {
     }
 
     @PutMapping(consumes = "application/json")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<ResponseWrapper> updateUser(@RequestBody UserDTO userDTO){
         userService.update(userDTO);
         return ResponseEntity
@@ -47,6 +53,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{username}")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<ResponseWrapper> deleteByUsername(@PathVariable("username")String username){
         userService.deleteByUserName(username);
         return ResponseEntity.ok(new ResponseWrapper("user is deleted",HttpStatus.OK));

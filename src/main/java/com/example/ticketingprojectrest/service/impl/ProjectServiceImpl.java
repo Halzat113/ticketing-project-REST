@@ -10,7 +10,10 @@ import com.example.ticketingprojectrest.repository.ProjectRepository;
 import com.example.ticketingprojectrest.service.ProjectService;
 import com.example.ticketingprojectrest.service.TaskService;
 import com.example.ticketingprojectrest.service.UserService;
+import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -84,8 +87,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
+        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();
 
-        UserDTO currentUserDTO = userService.findByUserName("harold@manager.com");
+        UserDTO currentUserDTO = userService.findByUserName(username);
 
         User user = mapperUtil.convert(currentUserDTO,new User());
 

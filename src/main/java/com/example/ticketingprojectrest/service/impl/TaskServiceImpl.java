@@ -10,6 +10,9 @@ import com.example.ticketingprojectrest.mapper.MapperUtil;
 import com.example.ticketingprojectrest.repository.TaskRepository;
 import com.example.ticketingprojectrest.repository.UserRepository;
 import com.example.ticketingprojectrest.service.TaskService;
+import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -105,8 +108,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByStatusIsNot(Status status) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
+        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();
 
-        User loggedInUser = userRepository.findByUserName("john@employee.com");
+        User loggedInUser = userRepository.findByUserName(username);
 
         List<Task> list = taskRepository.findAllByTaskStatusIsNotAndAssignedEmployee(status, loggedInUser);
         return list.stream().map(task -> mapperUtil.convert(task,new TaskDTO())).collect(Collectors.toList());
@@ -126,7 +132,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTasksByStatus(Status status) {
-        User loggedInUser = userRepository.findByUserName("john@employee.com");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
+        String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();
+
+        User loggedInUser = userRepository.findByUserName(username);
         List<Task> list = taskRepository.findAllByTaskStatusAndAssignedEmployee(status, loggedInUser);
         return list.stream().map(task -> mapperUtil.convert(task,new TaskDTO())).collect(Collectors.toList());
     }
