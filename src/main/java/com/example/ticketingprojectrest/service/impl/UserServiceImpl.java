@@ -7,6 +7,7 @@ import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.User;
 import com.example.ticketingprojectrest.mapper.MapperUtil;
 import com.example.ticketingprojectrest.repository.UserRepository;
+import com.example.ticketingprojectrest.service.KeycloakService;
 import com.example.ticketingprojectrest.service.ProjectService;
 import com.example.ticketingprojectrest.service.TaskService;
 import com.example.ticketingprojectrest.service.UserService;
@@ -23,12 +24,14 @@ public class UserServiceImpl implements UserService {
     private final MapperUtil mapperUtil;
     private final ProjectService projectService;
     private final TaskService taskService;
+    private final KeycloakService keycloakService;
 
-    public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil, ProjectService projectService, TaskService taskService) {
+    public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil, ProjectService projectService, TaskService taskService, KeycloakService keycloakService) {
         this.userRepository = userRepository;
         this.mapperUtil = mapperUtil;
         this.projectService = projectService;
         this.taskService = taskService;
+        this.keycloakService = keycloakService;
     }
 
     @Override
@@ -53,6 +56,7 @@ public class UserServiceImpl implements UserService {
         User obj = mapperUtil.convert(dto,new User());
 
         userRepository.save(obj);
+        keycloakService.userCreate(dto);
 
     }
 

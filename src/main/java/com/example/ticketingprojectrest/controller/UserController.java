@@ -40,7 +40,7 @@ public class UserController {
         userService.save(userDTO);
        return ResponseEntity
                .status(HttpStatus.CREATED)
-               .body(new ResponseWrapper("user created",userDTO,HttpStatus.CREATED));
+               .body(new ResponseWrapper("user created",HttpStatus.CREATED));
     }
 
     @PutMapping(consumes = "application/json")
