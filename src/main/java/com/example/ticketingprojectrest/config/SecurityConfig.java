@@ -20,15 +20,13 @@ public  class SecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authz->authz.anyRequest().authenticated());
+                .authorizeHttpRequests(authz->authz.anyRequest().permitAll());
 
         http
                 .oauth2ResourceServer(oauth2->oauth2.jwt(jwt->jwt.jwtAuthenticationConverter(jwtAuthConverter)));
 
         http
                 .sessionManagement(s->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 

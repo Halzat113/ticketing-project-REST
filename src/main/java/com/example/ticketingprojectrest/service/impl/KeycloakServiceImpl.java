@@ -3,7 +3,6 @@ package com.example.ticketingprojectrest.service.impl;
 import com.example.ticketingprojectrest.config.KeycloakProperties;
 import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.service.KeycloakService;
-import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UsersResource;
