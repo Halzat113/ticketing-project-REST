@@ -2,6 +2,7 @@ package com.example.ticketingprojectrest.controller;
 
 import com.example.ticketingprojectrest.dto.ProjectDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
+import com.example.ticketingprojectrest.exception.TicketingProjectException;
 import com.example.ticketingprojectrest.service.ProjectService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
@@ -58,7 +59,7 @@ public class ProjectController {
 
     @GetMapping("/manager/projectStatus")
     @PreAuthorize("hasRole('Manager')")
-    public ResponseEntity<ResponseWrapper> getProjectByManager(){
+    public ResponseEntity<ResponseWrapper> getProjectByManager() throws TicketingProjectException {
         return ResponseEntity
                 .ok(new ResponseWrapper("successfully retrieved",projectService.listAllProjectDetails(),HttpStatus.OK));
     }

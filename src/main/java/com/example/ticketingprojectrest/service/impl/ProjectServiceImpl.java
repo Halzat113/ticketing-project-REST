@@ -5,6 +5,7 @@ import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.Project;
 import com.example.ticketingprojectrest.entiy.User;
 import com.example.ticketingprojectrest.enums.Status;
+import com.example.ticketingprojectrest.exception.TicketingProjectException;
 import com.example.ticketingprojectrest.mapper.MapperUtil;
 import com.example.ticketingprojectrest.repository.ProjectRepository;
 import com.example.ticketingprojectrest.service.ProjectService;
@@ -86,7 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDTO> listAllProjectDetails() {
+    public List<ProjectDTO> listAllProjectDetails() throws TicketingProjectException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SimpleKeycloakAccount details = (SimpleKeycloakAccount) authentication.getDetails();
         String username = details.getKeycloakSecurityContext().getToken().getPreferredUsername();
