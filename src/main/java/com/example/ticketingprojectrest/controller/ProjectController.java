@@ -4,7 +4,6 @@ import com.example.ticketingprojectrest.dto.ProjectDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
 import com.example.ticketingprojectrest.exception.TicketingProjectException;
 import com.example.ticketingprojectrest.service.ProjectService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
