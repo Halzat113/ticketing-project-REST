@@ -1,6 +1,5 @@
 package com.example.ticketingprojectrest.controller;
 
-import com.example.ticketingprojectrest.annotation.DefaultExceptionMessage;
 import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
 import com.example.ticketingprojectrest.exception.TicketingProjectException;
@@ -35,7 +34,6 @@ public class UserController {
     @GetMapping("/{username}")
     @PreAuthorize("hasRole('Admin')")
     @Operation(summary = "Get User By Username")
-    @DefaultExceptionMessage(defaultMessage = "Failed to retrieve user")
     public ResponseEntity<ResponseWrapper> getUserByUsername(@PathVariable("username")String username) throws TicketingProjectException {
         UserDTO userDTO = userService.findByUserName(username);
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",userDTO,HttpStatus.OK));
@@ -64,8 +62,7 @@ public class UserController {
     @DeleteMapping("/{username}")
     @PreAuthorize("hasRole('Admin')")
     @Operation(summary = "Delete User")
-    @DefaultExceptionMessage(defaultMessage = "Failed to delete user")
-    public ResponseEntity<ResponseWrapper> deleteByUsername(@PathVariable("username")String username) throws TicketingProjectException {
+    public ResponseEntity<ResponseWrapper> deleteByUsername(@PathVariable("username")String username)  {
         //userService.deleteByUserName(username);
         userService.delete(username);
         return ResponseEntity.ok(new ResponseWrapper("user is deleted",HttpStatus.OK));

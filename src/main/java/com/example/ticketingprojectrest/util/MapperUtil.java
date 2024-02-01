@@ -1,4 +1,4 @@
-package com.example.ticketingprojectrest.mapper;
+package com.example.ticketingprojectrest.util;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

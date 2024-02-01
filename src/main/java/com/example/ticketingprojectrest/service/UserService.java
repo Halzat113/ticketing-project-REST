@@ -11,7 +11,7 @@ public interface UserService {
     void save(UserDTO dto);
     UserDTO update(UserDTO dto) throws TicketingProjectException;
     void deleteByUserName(String username);
-    void delete(String username) throws TicketingProjectException;
+    void delete(String username);
     List<UserDTO> listAllByRole(String role);
 
 }

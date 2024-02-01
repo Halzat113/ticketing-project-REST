@@ -3,6 +3,7 @@ package com.example.ticketingprojectrest.repository;
 import com.example.ticketingprojectrest.entiy.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -14,4 +15,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     void deleteByUserName(String username);
 
     List<User> findAllByRoleDescriptionIgnoreCase(String description);
+
+    @Query("SELECT u.userName FROM User u")
+    List<String> findALlUsernames();
 }

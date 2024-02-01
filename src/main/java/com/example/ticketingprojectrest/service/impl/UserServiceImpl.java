@@ -6,7 +6,7 @@ import com.example.ticketingprojectrest.dto.TaskDTO;
 import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.User;
 import com.example.ticketingprojectrest.exception.TicketingProjectException;
-import com.example.ticketingprojectrest.mapper.MapperUtil;
+import com.example.ticketingprojectrest.util.MapperUtil;
 import com.example.ticketingprojectrest.repository.UserRepository;
 import com.example.ticketingprojectrest.service.KeycloakService;
 import com.example.ticketingprojectrest.service.ProjectService;
@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> listAllUsers() {
-
         List<User> userList = userRepository.findAll(Sort.by("firstName"));
         return userList.stream().map(user -> mapperUtil.convert(user,new UserDTO())).collect(Collectors.toList());
 
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByUserName(String username) throws TicketingProjectException {
-        if (username==null || userRepository.findByUserName(username)==null){
+        if(!userRepository.findALlUsernames().contains(username)){
             throw new TicketingProjectException("User not found");
         }
         User user = userRepository.findByUserName(username);
@@ -86,7 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String username) throws TicketingProjectException {
+    public void delete(String username) {
         User user = userRepository.findByUserName(username);
 
         if (checkIfUserCanBeDeleted(user)) {
@@ -94,16 +93,17 @@ public class UserServiceImpl implements UserService {
             user.setUserName(user.getUserName() + "-" + user.getId());
             userRepository.save(user);
             keycloakService.delete(username);
-        }else {
-            throw new TicketingProjectException("User cannot be deleted");
+        } else {
+            try {
+                throw new TicketingProjectException("User cannot be deleted");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     }
 
-    private boolean checkIfUserCanBeDeleted(User user) throws TicketingProjectException {
-        if (user==null){
-            throw new TicketingProjectException("User not found");
-        }
+    private boolean checkIfUserCanBeDeleted(User user) {
         switch (user.getRole().getDescription()) {
             case "Manager" -> {
                 List<ProjectDTO> projectDTOList = projectService.readAllByAssignedManager(mapperUtil.convert(user,new UserDTO()));

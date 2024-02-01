@@ -6,7 +6,7 @@ import com.example.ticketingprojectrest.entiy.Project;
 import com.example.ticketingprojectrest.entiy.Task;
 import com.example.ticketingprojectrest.entiy.User;
 import com.example.ticketingprojectrest.enums.Status;
-import com.example.ticketingprojectrest.mapper.MapperUtil;
+import com.example.ticketingprojectrest.util.MapperUtil;
 import com.example.ticketingprojectrest.repository.TaskRepository;
 import com.example.ticketingprojectrest.repository.UserRepository;
 import com.example.ticketingprojectrest.service.TaskService;

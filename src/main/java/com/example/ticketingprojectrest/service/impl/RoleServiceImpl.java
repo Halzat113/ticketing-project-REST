@@ -2,7 +2,7 @@ package com.example.ticketingprojectrest.service.impl;
 
 
 import com.example.ticketingprojectrest.dto.RoleDTO;
-import com.example.ticketingprojectrest.mapper.MapperUtil;
+import com.example.ticketingprojectrest.util.MapperUtil;
 import com.example.ticketingprojectrest.repository.RoleRepository;
 import com.example.ticketingprojectrest.service.RoleService;
 import org.springframework.stereotype.Service;

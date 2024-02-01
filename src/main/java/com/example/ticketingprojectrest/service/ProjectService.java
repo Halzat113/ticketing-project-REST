@@ -2,7 +2,6 @@ package com.example.ticketingprojectrest.service;
 
 import com.example.ticketingprojectrest.dto.ProjectDTO;
 import com.example.ticketingprojectrest.dto.UserDTO;
-import com.example.ticketingprojectrest.entiy.User;
 import com.example.ticketingprojectrest.exception.TicketingProjectException;
 
 import java.util.List;
