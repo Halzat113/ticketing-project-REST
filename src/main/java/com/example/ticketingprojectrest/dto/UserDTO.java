@@ -2,13 +2,13 @@ package com.example.ticketingprojectrest.dto;
 
 import com.example.ticketingprojectrest.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserDTO {
 
     private Long id;

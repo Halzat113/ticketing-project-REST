@@ -2,16 +2,15 @@ package com.example.ticketingprojectrest.dto;
 
 import com.example.ticketingprojectrest.enums.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class ProjectDTO {
 
     private Long id;

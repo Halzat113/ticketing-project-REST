@@ -1,5 +1,6 @@
 package com.example.ticketingprojectrest.controller;
 
+import com.example.ticketingprojectrest.annotation.ExecutionTime;
 import com.example.ticketingprojectrest.dto.ProjectDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
 import com.example.ticketingprojectrest.exception.TicketingProjectException;
@@ -20,6 +21,7 @@ public class ProjectController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('Manager','Admin')")
+    @ExecutionTime
     public ResponseEntity<ResponseWrapper> getAllProjects(){
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",projectService.listAllProjects(), HttpStatus.OK));
     }
@@ -45,7 +47,7 @@ public class ProjectController {
     public ResponseEntity<ResponseWrapper> updateProject(@RequestBody ProjectDTO projectDTO){
         projectService.update(projectDTO);
         return ResponseEntity
-                .ok(new ResponseWrapper("project created",projectDTO,HttpStatus.OK));
+                .ok(new ResponseWrapper("project updated",projectDTO,HttpStatus.OK));
     }
 
     @DeleteMapping("/{projectCode}")

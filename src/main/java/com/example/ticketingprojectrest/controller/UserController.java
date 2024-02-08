@@ -1,5 +1,6 @@
 package com.example.ticketingprojectrest.controller;
 
+import com.example.ticketingprojectrest.annotation.ExecutionTime;
 import com.example.ticketingprojectrest.dto.UserDTO;
 import com.example.ticketingprojectrest.entiy.ResponseWrapper;
 import com.example.ticketingprojectrest.exception.TicketingProjectException;
@@ -26,6 +27,7 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasRole('Admin')")
     @Operation(summary = "Get Users")
+    @ExecutionTime
     public ResponseEntity<ResponseWrapper> getUsers(){
         List<UserDTO> userDTOSList = userService.listAllUsers();
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",userDTOSList, HttpStatus.OK));
@@ -34,6 +36,7 @@ public class UserController {
     @GetMapping("/{username}")
     @PreAuthorize("hasRole('Admin')")
     @Operation(summary = "Get User By Username")
+    @ExecutionTime
     public ResponseEntity<ResponseWrapper> getUserByUsername(@PathVariable("username")String username) throws TicketingProjectException {
         UserDTO userDTO = userService.findByUserName(username);
         return ResponseEntity.ok(new ResponseWrapper("successfully retrieved",userDTO,HttpStatus.OK));
