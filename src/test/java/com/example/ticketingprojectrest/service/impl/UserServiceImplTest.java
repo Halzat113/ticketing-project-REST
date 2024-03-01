@@ -150,8 +150,13 @@ class UserServiceImplTest {
         verify(keycloakService).userCreate(any());
 
         assertThat(actualDTO).usingRecursiveComparison().isEqualTo(userDTO);
+    }
 
+    @Test
+    void should_delete_user(){
+        userRepository.delete(user);
 
+        verify(userRepository).delete(user);
     }
 
 
