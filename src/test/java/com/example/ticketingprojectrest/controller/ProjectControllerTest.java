@@ -153,8 +153,6 @@ class ProjectControllerTest {
                         ResponseDTO.class);
 
         if (response.getBody() != null) {
-            System.out.println("================================");
-            System.out.println(response.getBody().getAccess_token());
             return response.getBody().getAccess_token();
         }
 

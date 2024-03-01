@@ -13,6 +13,7 @@ import com.example.ticketingprojectrest.service.ProjectService;
 import com.example.ticketingprojectrest.service.TaskService;
 import com.example.ticketingprojectrest.service.UserService;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,13 +27,15 @@ public class UserServiceImpl implements UserService {
     private final ProjectService projectService;
     private final TaskService taskService;
     private final KeycloakService keycloakService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil, ProjectService projectService, TaskService taskService, KeycloakService keycloakService) {
+    public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil, ProjectService projectService, TaskService taskService, KeycloakService keycloakService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.mapperUtil = mapperUtil;
         this.projectService = projectService;
         this.taskService = taskService;
         this.keycloakService = keycloakService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -43,8 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findByUserName(String username) throws TicketingProjectException {
-        if(!userRepository.findALlUsernames().contains(username)){
+    public UserDTO findByUserName(String username){
+        if (!userRepository.findALlUsernames().contains(username)){
             throw new TicketingProjectException("User not found");
         }
         User user = userRepository.findByUserName(username);
@@ -52,15 +55,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserDTO dto) {
+    public UserDTO save(UserDTO dto) {
 
         dto.setEnabled(true);
 
         User obj = mapperUtil.convert(dto,new User());
+        obj.setPassWord(passwordEncoder.encode(obj.getPassWord()));
 
-        userRepository.save(obj);
+        User savedUser = userRepository.save(obj);
         keycloakService.userCreate(dto);
 
+        return mapperUtil.convert(savedUser,new UserDTO());
     }
 
     @Override

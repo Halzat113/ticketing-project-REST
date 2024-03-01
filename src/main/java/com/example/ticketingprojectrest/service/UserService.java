@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> listAllUsers();
     UserDTO findByUserName(String username) throws TicketingProjectException;
-    void save(UserDTO dto);
+    UserDTO save(UserDTO dto);
     UserDTO update(UserDTO dto) throws TicketingProjectException;
     void deleteByUserName(String username);
     void delete(String username);

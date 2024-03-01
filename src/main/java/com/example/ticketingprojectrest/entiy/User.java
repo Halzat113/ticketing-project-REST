@@ -1,7 +1,6 @@
 package com.example.ticketingprojectrest.entiy;
 
 import com.example.ticketingprojectrest.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
